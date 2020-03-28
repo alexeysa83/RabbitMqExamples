@@ -10,7 +10,6 @@ import java.util.Random;
 
 import static com.andersenlab.aadamovich.demorabbitmq.work_queue.ConstantDataClass.QUEUE_NAME;
 
-@EnableRabbit
 @Component
 public class RabbitMqListener {
 
