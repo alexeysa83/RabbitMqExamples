@@ -1,4 +1,4 @@
-package com.andersenlab.aadamovich.demorabbitmq.hello_world;
+package com.andersenlab.aadamovich.demorabbitmq.work_queue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static com.andersenlab.aadamovich.demorabbitmq.hello_world.ConstantDataClass.QUEUE_NAME;
+import static com.andersenlab.aadamovich.demorabbitmq.work_queue.ConstantDataClass.QUEUE_NAME;
 
 @Controller
 public class SendController {
@@ -22,7 +22,9 @@ public class SendController {
     @ResponseBody
     String helloQueue() {
         logger.info("Sending to ... " + QUEUE_NAME);
-        template.convertAndSend(QUEUE_NAME, "Hello, world!");
+        for (int i = 1; i < 11; i++) {
+            template.convertAndSend(QUEUE_NAME, "Message №" + i);
+        }
         return "Return from Controller!";
     }
 
