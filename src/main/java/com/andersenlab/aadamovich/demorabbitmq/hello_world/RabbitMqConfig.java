@@ -7,12 +7,10 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import static com.andersenlab.aadamovich.demorabbitmq.hello_world.ConstantDataClass.*;
+import static com.andersenlab.aadamovich.demorabbitmq.hello_world.ConstantDataClass.QUEUE_NAME;
 
 @Configuration
 public class RabbitMqConfig {
@@ -34,16 +32,4 @@ public class RabbitMqConfig {
     public Queue queue() {
         return new Queue(QUEUE_NAME);
     }
-
-
-    @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(QUEUE_NAME);
-        container.setMessageListener(message -> logger.info
-                ("Message from " + QUEUE_NAME + new String(message.getBody())));
-        return container;
-    }
-
 }
