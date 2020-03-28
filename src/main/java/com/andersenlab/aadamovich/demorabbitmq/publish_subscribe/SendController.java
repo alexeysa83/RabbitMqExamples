@@ -1,14 +1,14 @@
-package com.andersenlab.aadamovich.demorabbitmq.work_queue;
+package com.andersenlab.aadamovich.demorabbitmq.publish_subscribe;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static com.andersenlab.aadamovich.demorabbitmq.work_queue.ConstantDataClass.QUEUE_NAME;
+import static com.andersenlab.aadamovich.demorabbitmq.publish_subscribe.ConstantDataClass.EXCHANGE_NAME;
 
 @Controller
 public class SendController {
@@ -16,17 +16,16 @@ public class SendController {
     Logger logger = LogManager.getLogger(SendController.class);
 
     @Autowired
-    AmqpTemplate template;
+    RabbitTemplate template;
 
     @RequestMapping("/send")
     @ResponseBody
     String helloQueue() {
-        logger.info("Sending to ... " + QUEUE_NAME);
+        logger.info("Sending to ... " + EXCHANGE_NAME);
+        template.setExchange(EXCHANGE_NAME);
         for (int i = 1; i < 11; i++) {
-            template.convertAndSend(QUEUE_NAME, "Message №" + i);
+            template.convertAndSend("Exchange message №" + i);
         }
         return "Return from Controller!";
     }
-
-
 }
