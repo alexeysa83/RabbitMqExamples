@@ -1,4 +1,4 @@
-package com.andersenlab.aadamovich.demorabbitmq.direct_exchange;
+package com.andersenlab.aadamovich.demorabbitmq.topic_exchange;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Random;
 
-import static com.andersenlab.aadamovich.demorabbitmq.direct_exchange.ConstantDataClass.EXCHANGE_NAME;
+import static com.andersenlab.aadamovich.demorabbitmq.topic_exchange.ConstantDataClass.EXCHANGE_NAME;
 
 @Controller
 public class SendController {
@@ -28,19 +28,19 @@ public class SendController {
         template.setExchange(EXCHANGE_NAME);
         for (int i = 1; i < 11; i++) {
             String routingKey = selectRoutingKey();
-            template.convertAndSend(routingKey,String.format("Direct message №%d Key: %s", i,routingKey));
+            template.convertAndSend(routingKey,String.format("Topic message №%d Key: %s", i,routingKey));
         }
         return "Return from Controller!";
     }
 
     private String selectRoutingKey() {
-        switch (random.nextInt(4)) {
+        switch (random.nextInt(3)) {
+            case 0:
+                return "error.BOTH";
             case 1:
-                return "error";
+                return "error.MUST.be.SECOND";
             case 2:
-                return "info";
-            case 3:
-                return "command";
+                return "error.SECOND.TOO";
             default:
                 return null;
         }

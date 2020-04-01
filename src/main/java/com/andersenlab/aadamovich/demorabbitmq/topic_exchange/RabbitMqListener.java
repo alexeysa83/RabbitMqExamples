@@ -1,4 +1,4 @@
-package com.andersenlab.aadamovich.demorabbitmq.direct_exchange;
+package com.andersenlab.aadamovich.demorabbitmq.topic_exchange;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-import static com.andersenlab.aadamovich.demorabbitmq.direct_exchange.ConstantDataClass.*;
+import static com.andersenlab.aadamovich.demorabbitmq.topic_exchange.ConstantDataClass.*;
 
 @Component
 public class RabbitMqListener {
